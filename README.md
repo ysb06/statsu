@@ -1,0 +1,2 @@
+# statsu
+Python statistic GUI
