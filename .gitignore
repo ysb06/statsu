@@ -131,4 +131,4 @@ dmypy.json
 ## --- Custom --- ##
 # Visual Studio Code Settings
 .vscode
-.code-workspace
+*.code-workspace

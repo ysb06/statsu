@@ -1,5 +1,6 @@
 import logging
 from ast import literal_eval
+import time
 
 import numpy as np
 import pandas as pd
@@ -10,7 +11,7 @@ from PyQt5.QtWidgets import (QPushButton, QTableWidget, QTableWidgetItem,
 logger = logging.getLogger(__name__)
 
 
-class DataSheetWidget(QWidget, uic.loadUiType('src/datasheet.ui')[0]):
+class DataSheetWidget(QWidget, uic.loadUiType('statsu/widgets/datasheet.ui')[0]):
     def __init__(self, initial_data=pd.DataFrame([[1]], columns=['id']), name='sheet', path=None) -> None:
         super().__init__()
         self.setupUi(self)
@@ -47,12 +48,15 @@ class DataSheetWidget(QWidget, uic.loadUiType('src/datasheet.ui')[0]):
         )
 
     def update_value(self):
-        for cidx, col_name in enumerate(self.data):
-            col = self.data[col_name]
-            logger.info(col.dtypes)
+        refined_data = self.data.fillna('')
+        # 왜 nan -> '' 변환이 일어나는가?
+
+        for cidx, col_name in enumerate(refined_data):
+            col = refined_data[col_name]
             for ridx, value in enumerate(col):
                 self.data_widget.setItem(
-                    ridx, cidx, QTableWidgetItem(str(value)))
+                    ridx, cidx, QTableWidgetItem(str(value))
+                )
 
     def add_row(self, row: int, col: int):
         if row == self.data_widget.rowCount() - 1 and self.data_widget.item(row, col).text() != '':
@@ -93,8 +97,9 @@ class DataSheetWidget(QWidget, uic.loadUiType('src/datasheet.ui')[0]):
 
             if old_val != new_val:
                 try:
-                    self.data.iat[row, col] = literal_eval(new_val)
+                    if new_val != '':
+                        self.data.iat[row, col] = literal_eval(new_val)
+                    else:
+                        self.data.iat[row, col] = ''
                 except ValueError:
                     self.data.iat[row, col] = self.data_widget.item(row, col).text()
-
-                self.update_value()

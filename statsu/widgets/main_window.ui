@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>779</width>
-    <height>616</height>
+    <width>710</width>
+    <height>581</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -69,6 +69,53 @@
       <property name="title">
        <string>GroupBox</string>
       </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QTextEdit" name="textEdit"/>
+       </item>
+       <item>
+        <widget class="QTabWidget" name="tool_box">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="terminal_tab">
+          <attribute name="title">
+           <string>Terminal</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QTextEdit" name="terminal_text_box">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
@@ -78,7 +125,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>779</width>
+     <width>710</width>
      <height>26</height>
     </rect>
    </property>
@@ -96,19 +143,19 @@
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
-     <string>도구</string>
+     <string>Tools</string>
     </property>
     <addaction name="actionRun_Scripts"/>
    </widget>
    <widget class="QMenu" name="menu">
     <property name="title">
-     <string>분석</string>
+     <string>Analysis</string>
     </property>
     <widget class="QMenu" name="menuDescriptive_Statistics">
      <property name="title">
       <string>Descriptive Statistics</string>
      </property>
-     <addaction name="actionFrequency_Analysis"/>
+     <addaction name="action_analysis_frequencyanalysis"/>
     </widget>
     <addaction name="menuDescriptive_Statistics"/>
    </widget>
@@ -116,7 +163,7 @@
    <addaction name="menuTools"/>
    <addaction name="menu"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="status_bar"/>
   <action name="action_file_quit">
    <property name="text">
     <string>Quit</string>
@@ -124,7 +171,7 @@
   </action>
   <action name="action_file_new">
    <property name="text">
-    <string>New</string>
+    <string>&amp;New</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
@@ -148,7 +195,7 @@
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionFrequency_Analysis">
+  <action name="action_analysis_frequencyanalysis">
    <property name="text">
     <string>Frequency Analysis</string>
    </property>

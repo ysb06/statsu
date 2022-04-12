@@ -1,0 +1,3 @@
+import statsu
+
+statsu.show()
