@@ -3,16 +3,13 @@ import os
 
 import pandas as pd
 from PyQt5.QtWidgets import QFileDialog
+from statsu.actions.menu_action import MenuAction
 from statsu.widgets.datasheet import DataSheetWidget
-from statsu.widgets.main_window import MainWindow
 
 logger = logging.getLogger(__name__)
 
 
-class FileAction:
-    def __init__(self, main_window: MainWindow) -> None:
-        self.main_window = main_window
-
+class FileAction(MenuAction):
     def create_new_doc(self) -> None:
         new_doc = DataSheetWidget()
         self.main_window.datasheet_tab.addTab(
@@ -22,20 +19,20 @@ class FileAction:
         self.main_window.datasheet_tab.setCurrentWidget(new_doc)
 
     def save_doc(self) -> None:
-        datasheet: DataSheetWidget = self.main_window.datasheet_tab.currentWidget()
+        datasheet: DataSheetWidget = self.main_window.get_current_datasheet()
 
         if datasheet.path is not None:
             data: pd.DataFrame = datasheet.data
             data.to_excel(datasheet.path)
             logger.info(f'File saved...')
         else:
-            self.save_doc_as(datasheet=datasheet)
+            self.save_doc_as()
 
-    def save_doc_as(self, datasheet: DataSheetWidget) -> None:
-        data: pd.DataFrame = datasheet.data
+    def save_doc_as(self) -> None:
+        data: pd.DataFrame = self.main_window.get_current_datasheet().data
 
         target_path = QFileDialog.getSaveFileName(
-            self, 'Save as',
+            self.main_window, 'Save as',
             filter='Excel Files (*.xlsx *.xls)',
             directory=os.path.expanduser('~/')
         )
@@ -45,7 +42,7 @@ class FileAction:
 
     def load_doc(self) -> None:
         target_path = QFileDialog.getOpenFileName(
-            self, 'Open File',
+            self.main_window, 'Open File',
             filter='Excel Files (*.xlsx *.xls);;CSV files (*.csv);;Text files (*.txt)',
             initialFilter='CSV files (*.csv)',
             directory=os.path.expanduser('~/')
@@ -61,8 +58,6 @@ class FileAction:
         elif ext == '.csv':
             # Header 선택 옵션
             df: pd.DataFrame = pd.read_csv(target_path[0], header=0)
-            if len(df) >= 100000:
-                logger.warning('Data is too big to load all')
             name = file_name
 
         new_doc = DataSheetWidget(initial_data=df, name=name, path=target_path)
