@@ -1,8 +1,9 @@
-import logging
 from typing import Union
+import logging
 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QAction, QMainWindow, QTabWidget, QTextEdit, QMenu
+from PyQt5.QtWidgets import QAction, QMainWindow, QTabWidget, QTextEdit, QMenu, QGroupBox
+from statsu.widgets.analysis.general_bridge import GeneralBridge
 
 from statsu.widgets.datasheet import DataSheetWidget
 from statsu.statistics import FuncDef, FuncDefGroup, Function_List
@@ -10,7 +11,7 @@ from statsu.statistics import FuncDef, FuncDefGroup, Function_List
 logger = logging.getLogger(__name__)
 
 
-class MainWindow(QMainWindow, uic.loadUiType('statsu/widgets/main_window.ui')[0]):
+class MainWindow(QMainWindow, uic.loadUiType('statsu/widgets/main_window.ui')[0]):  # type: ignore
     def __init__(self) -> None:
         super().__init__()
         self.setupUi(self)
@@ -18,15 +19,6 @@ class MainWindow(QMainWindow, uic.loadUiType('statsu/widgets/main_window.ui')[0]
         self.datasheet_tab: QTabWidget = self.datasheet_tab
         self.terminal_text_box: QTextEdit = self.terminal_text_box
         self.status_bar = self.statusBar()
-
-        self.action_file_quit: QAction = self.action_file_quit
-        self.action_file_new: QAction = self.action_file_new
-        self.action_file_save: QAction = self.action_file_save
-        self.action_file_save_as: QAction = self.action_file_save_as
-        self.action_file_load: QAction = self.action_file_load
-        self.action_tools_run_scripts: QAction = self.action_tools_run_scripts
-
-        self.action_analysis_frequency_analysis: QAction = self.action_analysis_frequency_analysis
 
         self.init_ui()
 
@@ -41,9 +33,9 @@ class MainWindow(QMainWindow, uic.loadUiType('statsu/widgets/main_window.ui')[0]
             for item in func_list:
                 if type(item) == FuncDefGroup:
                     new_menu = menu.addMenu(item.name)
-                    add_func_to_menu(new_menu, item)
+                    add_func_to_menu(new_menu, item)  # type: ignore
                 elif type(item) == FuncDef:
-                    menu.addAction(AnalysisAction(item, self))
+                    menu.addAction(AnalysisAction(item, self))  # type: ignore
 
         add_func_to_menu(self.analysis_menu, Function_List)
 
@@ -55,5 +47,10 @@ class AnalysisAction(QAction):
         self.triggered.connect(self.run)
 
     def run(self):
-        print(f'Run analysis {self.core.name}')
+        dialogue = GeneralBridge(self.core.func, self.parent())
+        dialogue.setWindowTitle(self.core.name)
+        res = dialogue.exec()
+        for e in dialogue.elements:
+            print(f'{e.name}:= {e.get_value()}')
+        print(f'Run analysis {self.core.name} -> {res}')
         # 특별히 정해진 인터페이스가 없는 경우 general bridge dialogue 호출
