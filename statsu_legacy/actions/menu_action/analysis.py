@@ -1,7 +1,7 @@
 import logging
 
-import statsu.statistics.descriptive_statistics as d_stat
-from statsu.actions.menu_action import MenuAction
+import statsu_legacy.statistics.descriptive_statistics as d_stat
+from statsu_legacy.actions.menu_action import MenuAction
 
 logger = logging.getLogger(__name__)
 

@@ -3,10 +3,10 @@ import logging
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import QAction, QMainWindow, QTabWidget, QTextEdit, QMenu, QGroupBox
-from statsu.widgets.analysis.general_bridge import GeneralBridge
+from statsu_legacy.widgets.analysis.general_bridge import GeneralBridge
 
-from statsu.widgets.datasheet import DataSheetWidget
-from statsu.statistics import FuncDef, FuncDefGroup, Function_List
+from statsu_legacy.widgets.datasheet import DataSheetWidget
+from statsu_legacy.statistics import FuncDef, FuncDefGroup, Function_List
 
 logger = logging.getLogger(__name__)
 

@@ -1,4 +1,4 @@
-from statsu.widgets.main_window import MainWindow
+from statsu_legacy.widgets.main_window import MainWindow
 
 
 class MenuAction:

@@ -1,5 +1,5 @@
 import logging
-from statsu.actions.menu_action import MenuAction
+from statsu_legacy.actions.menu_action import MenuAction
 
 logger = logging.getLogger(__name__)
 

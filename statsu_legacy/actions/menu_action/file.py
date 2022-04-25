@@ -3,8 +3,8 @@ import os
 
 import pandas as pd
 from PyQt5.QtWidgets import QFileDialog
-from statsu.actions.menu_action import MenuAction
-from statsu.widgets.datasheet import DataSheetWidget
+from statsu_legacy.actions.menu_action import MenuAction
+from statsu_legacy.widgets.datasheet import DataSheetWidget
 
 logger = logging.getLogger(__name__)
 

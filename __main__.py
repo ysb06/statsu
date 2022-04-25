@@ -1,3 +1,3 @@
-import statsu_pandas_gui
+import statsu
 
-statsu_pandas_gui.show()
+statsu.show()

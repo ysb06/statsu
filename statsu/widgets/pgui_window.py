@@ -16,7 +16,7 @@ class PguiWindow(PandasGui):
         self.navigator.setWindowTitle('Dataframe Navigator')
 
     def make_menu_bar(self):
-        from statsu_pandas_gui.actions import StatsuMenuBar
+        from statsu.actions import StatsuMenuBar
 
         self.setMenuBar(StatsuMenuBar(self))
 

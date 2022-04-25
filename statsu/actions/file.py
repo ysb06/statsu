@@ -1,5 +1,5 @@
-from statsu_pandas_gui.actions import MenuActionGroup, MenuAction
-from statsu_pandas_gui.widgets.pgui_window import PguiWindow
+from statsu.actions import MenuActionGroup, MenuAction
+from statsu.widgets.pgui_window import PguiWindow
 import logging
 
 logger = logging.getLogger(__name__)

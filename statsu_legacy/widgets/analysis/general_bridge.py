@@ -1,43 +1,38 @@
 import inspect
 from ast import literal_eval
-from typing import Any, Callable, List, Optional, Union
+from typing import Callable, List, Optional, Union
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import (QCheckBox, QDialog, QFormLayout, QGroupBox,
                              QLineEdit, QWidget)
 
 
-class RunFunctionDialog(QDialog, uic.loadUiType('statsu/widgets/analysis/run_function_dialog.ui')[0]):
-    def __init__(self, target: Callable, parent: Optional[QWidget] = None, *args) -> None:
+class GeneralBridge(QDialog, uic.loadUiType('statsu/widgets/analysis/general_bridge.ui')[0]):
+    def __init__(self, target: Callable, parent: Optional[QWidget] = None) -> None:
         super().__init__(parent=parent)
         self.setupUi(self)
 
         self.param_option_group_box: QGroupBox = self.param_option_group_box
         self.param_value_group_box: QGroupBox = self.param_value_group_box
         self.elements: List[BridgeElement] = []
-        self.target_func = target
-        self.data_list = args
+
+        # self.param_value_group_box.setLayout(QFormLayout(self))
 
         spec = inspect.getfullargspec(target)
-        params = spec.args[(len(spec.args) - len(spec.defaults)):]
-        for arg, val in zip(params, spec.defaults):
+        params = spec.args[1:]
+        for arg, val in zip(
+            params,
+            [None for _ in range(len(params) - len(spec.defaults))] + list(spec.defaults)
+        ):
             if type(val) == bool:
                 elem = OptionBridgeElement(arg, 2 if val else 0, self.param_option_group_box)
+                self.elements.append(elem)
             else:
                 elem = StringBridgeElement(arg, val, self.param_value_group_box)
-            self.elements.append(elem)
+                self.elements.append(elem)
 
-    def run(self) -> Any:
-        action_result = self.exec()
-
-        if action_result == 0:
-            return None
-        else:
-            args = {}
-            for element in self.elements:
-                args[element.name] = element.value
-
-            return self.target_func(*self.data_list, **args)
+    def exec(self) -> int:
+        return super().exec()
 
 
 class BridgeElement(QWidget):
