@@ -132,3 +132,6 @@ dmypy.json
 # Visual Studio Code Settings
 .vscode
 *.code-workspace
+
+# Sample
+sample_data/
