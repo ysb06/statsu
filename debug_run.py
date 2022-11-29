@@ -8,4 +8,4 @@ data = pd.DataFrame([
     [26.921, 102, 19, 3.212, -232],
 ])
 
-statsu.show(data)
+print(statsu.show(data, force_output=True))

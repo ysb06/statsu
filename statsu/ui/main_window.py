@@ -1,5 +1,5 @@
 import logging
-from typing import List, Tuple
+from typing import List, Optional, Tuple, Union
 
 import pandas as pd
 from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
@@ -25,6 +25,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def get_current_data_container(self) -> DataContainer:
         return self.main_data_tab_widget.currentWidget()
+    
+    def get_data_container_count(self) -> int:
+        return self.main_data_tab_widget.count()
 
     def copy_data(self):
         selections = self.get_current_data_container().data_view.selectedIndexes()
