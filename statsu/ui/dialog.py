@@ -1,6 +1,6 @@
 from typing import Optional
 from PySide6.QtWidgets import QDialog, QWidget
-from ui.design.open_csv_dialog import Ui_OpenCSVDialog
+from statsu.ui.design.open_csv_dialog import Ui_OpenCSVDialog
 
 class OpenCSVDialog(QDialog, Ui_OpenCSVDialog):
     def __init__(self, parent: Optional[QWidget] = None) -> None:

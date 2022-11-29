@@ -3,6 +3,7 @@ import pandas as pd
 import argparse
 
 
+
 def get_sample_data(id: int):
     data = None
     if id == 1:
@@ -25,8 +26,11 @@ def get_sample_data(id: int):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Statsu Pandas Editor')
-    parser.add_argument('--demo', type=int,
-                        help='Open with sample data (Number: Sample Data ID)')
+    parser.add_argument(
+        '--demo', 
+        type=int,
+        help='Open with sample data (Number: Sample Data ID)'
+    )
 
     args = parser.parse_args()
     sample_data = get_sample_data(args.demo)

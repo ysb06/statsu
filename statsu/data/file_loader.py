@@ -1,7 +1,7 @@
 import logging
-from operator import contains
+
 import pandas as pd
-from ui.dialog import OpenCSVDialog
+from statsu.ui.dialog import OpenCSVDialog
 
 logger = logging.getLogger(__name__)
 

@@ -1,24 +1,16 @@
 import unittest
-import os
-import sys
-
-PROJECT_PATH = os.getcwd()
-SOURCE_PATH = os.path.join(
-    PROJECT_PATH, 'statsu'
-)
-sys.path.append(SOURCE_PATH)
+import pandas as pd
+import statsu
 
 
 class BaseTests(unittest.TestCase):
     def test_basic(self):
         print()
-        print(f'Base Test Ok: {sys.path}')
+        print(f'Ready to Unit Test')
 
     def test_import(self):
         print()
         print('Importing...')
-        import pandas as pd
-        from statsu import statsu
 
         arr = pd.DataFrame([
             [1, 3, 5, 7, 9],
