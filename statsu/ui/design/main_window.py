@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.3.2
+## Created by: Qt User Interface Compiler version 6.4.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -33,7 +33,7 @@ class Ui_MainWindow(object):
             icon = QIcon.fromTheme(iconThemeName)
         else:
             icon.addFile(u".", QSize(), QIcon.Normal, QIcon.Off)
-        
+
         self.action_file_new.setIcon(icon)
         self.action_file_open = QAction(MainWindow)
         self.action_file_open.setObjectName(u"action_file_open")
@@ -107,7 +107,10 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(shortcut)
         self.action_file_open.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+O", None))
 #endif // QT_CONFIG(shortcut)
-        self.action_file_save.setText(QCoreApplication.translate("MainWindow", u"Save... (&S)", None))
+        self.action_file_save.setText(QCoreApplication.translate("MainWindow", u"Save (&S)", None))
+#if QT_CONFIG(shortcut)
+        self.action_file_save.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+S", None))
+#endif // QT_CONFIG(shortcut)
         self.action_file_save_as.setText(QCoreApplication.translate("MainWindow", u"Save As...", None))
         self.action_file_close.setText(QCoreApplication.translate("MainWindow", u"Close (&W)", None))
 #if QT_CONFIG(tooltip)

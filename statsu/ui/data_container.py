@@ -14,7 +14,8 @@ class DataContainer(QWidget, Ui_DataContainer):
     def __init__(
             self, 
             data: pd.DataFrame = None, 
-            name: str = 'Sheet', 
+            name: str = 'Sheet',
+            data_path: Optional[str] = None,
             parent: Optional[QWidget] = None
         ) -> None:
         super().__init__(parent)
@@ -24,9 +25,10 @@ class DataContainer(QWidget, Ui_DataContainer):
             data = pd.DataFrame([['']])
         self.raw_data = data
         self.name = name
+        self.data_path = data_path
 
-        model = PandasModel(data, self)
-        self.data_view.setModel(model)
+        self.model = PandasModel(data, self)
+        self.data_view.setModel(self.model)
         
     def setupUi(self, DataContainer):
         super().setupUi(DataContainer)

@@ -7,9 +7,10 @@ name = "pypi"
 pandas = "*"
 pyside6 = "*"
 openpyxl = "*"
+scikit-learn = "*"
 
 [dev-packages]
-autopep8 = "*"
+yapf = "*"
 
 [requires]
 python_version = "3.9"

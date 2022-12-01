@@ -8,4 +8,6 @@ data = pd.DataFrame([
     [26.921, 102, 19, 3.212, -232],
 ])
 
-print(statsu.show(data, force_output=True))
+data.columns = ['You', 'Are', 'So', 'Adorable', 'Really']
+data.index = [0, 4, 7, 10]
+print(statsu.show(data, read_only=False))

@@ -1,11 +1,10 @@
 import logging
-from typing import List, Optional, Tuple, Union
+from typing import List
 
 import pandas as pd
-from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
+from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtCore import Qt
 
-from statsu.data.file_loader import load_dataframe_from_file
 from statsu.ui.data_container import DataContainer
 from statsu.ui.design.main_window import Ui_MainWindow
 

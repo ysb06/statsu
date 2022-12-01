@@ -129,12 +129,12 @@ dmypy.json
 .pyre/
 
 ## --- Custom --- ##
-# Pipenv files
-*.lock
-
 # Visual Studio Code Settings
 .vscode
 *.code-workspace
 
 # Sample
 sample_data/
+
+# Other
+.DS_Store
