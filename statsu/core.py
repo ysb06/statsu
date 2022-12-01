@@ -26,7 +26,7 @@ class WindowUnit:
         self.settings.in_memory_target = data
         if self.settings.in_memory_target is not None:
             data_container = DataContainer(
-                data=self.settings.in_memory_target.copy(),
+                data=self.settings.in_memory_target,
                 name='Internal Data',
                 data_path='_Internal'
             )
@@ -46,19 +46,12 @@ class WindowUnit:
         self.main_window.update()
 
 
-def show(
-    input_data: pd.DataFrame = None,
-    read_only: bool = True
-) -> pd.DataFrame:
+def show(input_data: pd.DataFrame = None) -> pd.DataFrame:
     """
     프로그램을 잠시 멈추고 입력된 데이터를 보여준다.
     """
-    window = WindowUnit(input_data)
+    window = WindowUnit(input_data.copy())
     window.show()
     app.exec()
 
-    if read_only:
-        return input_data
-    else:
-        # Pandas deep-shallow copy에대해 이해가 필요
-        return window.settings.in_memory_target.copy()
+    return window.settings.in_memory_target

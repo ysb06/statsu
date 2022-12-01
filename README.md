@@ -22,13 +22,12 @@ pip install git+https://github.com/ysb06/statsu.git
 
 ## Usage
 
-단순히 실행만 해도 엑셀 파일이나 CSV파일로부터 데이터를 불러와서 볼 수도 있습니다.
+콘솔 창에 다음과 같이 입력하여 간단한 테스트를 할 수 있습니다.
 
-```Python
-from statsu import show
-
-show()
 ```
+python debug_run.py
+```
+실행 후 엑셀 파일이나 CSV파일로부터 데이터를 불러 올 수도 있습니다.
 
 보거나 편집하고자 하는 DataFrame을 입력으로 넣어서도 볼 수 있습니다. 편집 후에는 저장 후 닫으면 편집된 결과도 받을 수 있습니다.
 
