@@ -1,6 +1,6 @@
 import pandas as pd
+from dataclasses import dataclass
 
-
+@dataclass
 class WindowSettings:
-    def __init__(self) -> None:
-        self.in_memory_target: pd.DataFrame = None
+    in_memory_target: pd.DataFrame
