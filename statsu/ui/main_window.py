@@ -4,7 +4,6 @@ from typing import List
 import pandas as pd
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QKeySequence
 
 from statsu.ui.data_container import DataContainer
 from statsu.ui.design.main_window import Ui_MainWindow
@@ -15,14 +14,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self) -> None:
         super().__init__()
         self.setupUi(self)
-        self.action_file_new.setShortcut(QKeySequence.StandardKey.New)
-        self.action_file_open.setShortcut(QKeySequence.StandardKey.Open)
-        self.action_file_save.setShortcut(QKeySequence.StandardKey.Save)
-        self.action_file_save_as.setShortcut(QKeySequence.StandardKey.SaveAs)
-        self.action_file_close.setShortcut(QKeySequence.StandardKey.Close)
-
-        self.action_edit_copy.triggered.connect(self.copy_data)
-        self.action_edit_paste.triggered.connect(self.paste_data)
 
     def add_sheet(self, sheet: DataContainer):
         idx = self.main_data_tab_widget.addTab(sheet, sheet.name)

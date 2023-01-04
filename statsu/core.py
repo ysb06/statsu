@@ -4,16 +4,20 @@ from typing import List
 
 import pandas as pd
 from PySide6.QtWidgets import QApplication
+from PySide6.QtGui import QKeySequence
 
 from statsu.actions.action_file import ActionFile
+from statsu.actions.action_edit import ActionEdit
 from statsu.ui.data_container import DataContainer
 from statsu.ui.main_window import MainWindow
 
 from dataclasses import dataclass
 
-logging.basicConfig(format='%(asctime)s %(name)s [%(levelname)s] %(message)s',
-                    datefmt='%Y/%m/%d %H:%M:%S',
-                    level=logging.INFO)
+logging.basicConfig(
+    format='%(asctime)s %(name)s [%(levelname)s] %(message)s',
+    datefmt='%Y/%m/%d %H:%M:%S',
+    level=logging.INFO
+)
 
 logger = logging.getLogger(__name__)
 app = QApplication(sys.argv)
@@ -33,7 +37,6 @@ class WindowSettings:
 
 
 class WindowUnit:
-
     def __init__(self, in_memory_data: List[DataObject] = None) -> None:
         self.main_window = MainWindow()
         self.settings = WindowSettings(in_memory_data)
@@ -53,6 +56,19 @@ class WindowUnit:
         self.main_window.action_file_close.triggered.connect(self._action_file.close_window)
         self.main_window.action_file_save.triggered.connect(self._action_file.save_sheet)
         self.main_window.action_file_save_as.triggered.connect(self._action_file.save_sheet_as)
+        self.main_window.action_file_new.setShortcut(QKeySequence.StandardKey.New)
+        self.main_window.action_file_open.setShortcut(QKeySequence.StandardKey.Open)
+        self.main_window.action_file_save.setShortcut(QKeySequence.StandardKey.Save)
+        self.main_window.action_file_save_as.setShortcut(QKeySequence.StandardKey.SaveAs)
+        self.main_window.action_file_close.setShortcut(QKeySequence.StandardKey.Close)
+
+        self._action_edit = ActionEdit(self.main_window, self.settings)
+        self.main_window.action_edit_copy.triggered.connect(self._action_edit.copy_data)
+        self.main_window.action_edit_paste.triggered.connect(self._action_edit.paste_data)
+        self.main_window.action_edit_cut.triggered.connect(self._action_edit.cut_data)
+        self.main_window.action_edit_cut.setShortcut(QKeySequence.StandardKey.Cut)
+        self.main_window.action_edit_copy.setShortcut(QKeySequence.StandardKey.Copy)
+        self.main_window.action_edit_paste.setShortcut(QKeySequence.StandardKey.Paste)
 
     def show(self) -> None:
         self.main_window.show()
@@ -62,9 +78,6 @@ class WindowUnit:
 
 
 def show(input_data: pd.DataFrame = None, name: str = None) -> pd.DataFrame:
-    """
-    프로그램을 잠시 멈추고 입력된 데이터를 보여준다.
-    """
     if input_data is not None:
         window = WindowUnit(
             in_memory_data=[DataObject(input_data, name=name if name is not None else 'Data')]
@@ -75,9 +88,12 @@ def show(input_data: pd.DataFrame = None, name: str = None) -> pd.DataFrame:
     window.show()
     app.exec()
 
-    return window.settings.in_memory_target[0].data_frame
+def show_list(input_data: List[pd.DataFrame]):
+    window = WindowUnit([DataObject(data) for data in input_data])
+    window.show()
+    app.exec()
 
-def show_bundle(input_data: List[DataObject]):
+def show_list_with_name(input_data: List[DataObject]):
     window = WindowUnit(input_data)
     window.show()
     app.exec()

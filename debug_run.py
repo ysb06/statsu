@@ -18,11 +18,10 @@ data_1.columns = ['You', 'Are', 'So', 'Adorable', 'Really']
 data_1.index = [0, 4, 7, 10]
 
 print(data_1)
-result = statsu.show(data_1)
+statsu.show(data_1)
 print(data_1)
-print(result)
 
-statsu.show_bundle([
+statsu.show_list_with_name([
     statsu.DataObject(data_1, 'Data 1'),
     statsu.DataObject(data_2, 'Data 2'),
 ])
