@@ -13,6 +13,8 @@ from statsu.ui.main_window import MainWindow
 
 from dataclasses import dataclass
 
+from statsu.ui.user_command import UserCommandManager
+
 logging.basicConfig(
     format='%(asctime)s %(name)s [%(levelname)s] %(message)s',
     datefmt='%Y/%m/%d %H:%M:%S',
@@ -39,6 +41,7 @@ class WindowSettings:
 class WindowUnit:
     def __init__(self, in_memory_data: List[DataObject] = None) -> None:
         self.main_window = MainWindow()
+        self.main_window.command_manager = UserCommandManager()
         self.settings = WindowSettings(in_memory_data)
 
         if self.settings.in_memory_target is not None:
@@ -63,9 +66,13 @@ class WindowUnit:
         self.main_window.action_file_close.setShortcut(QKeySequence.StandardKey.Close)
 
         self._action_edit = ActionEdit(self.main_window, self.settings)
+        self.main_window.action_edit_undo.triggered.connect(self._action_edit.undo)
+        self.main_window.action_edit_redo.triggered.connect(self._action_edit.redo)
         self.main_window.action_edit_copy.triggered.connect(self._action_edit.copy_data)
         self.main_window.action_edit_paste.triggered.connect(self._action_edit.paste_data)
         self.main_window.action_edit_cut.triggered.connect(self._action_edit.cut_data)
+        self.main_window.action_edit_undo.setShortcut(QKeySequence.StandardKey.Undo)
+        self.main_window.action_edit_redo.setShortcut(QKeySequence.StandardKey.Redo)
         self.main_window.action_edit_cut.setShortcut(QKeySequence.StandardKey.Cut)
         self.main_window.action_edit_copy.setShortcut(QKeySequence.StandardKey.Copy)
         self.main_window.action_edit_paste.setShortcut(QKeySequence.StandardKey.Paste)

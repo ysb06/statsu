@@ -1,15 +1,25 @@
 import logging
+import math
 from typing import List
 
-from statsu.actions.action_base import ActionBase
-from PySide6.QtWidgets import QApplication, QMainWindow
-from PySide6.QtCore import Qt, QModelIndex
 import pandas as pd
-import math
+from PySide6.QtCore import QModelIndex, Qt
+from PySide6.QtWidgets import QApplication, QMainWindow
+
+from statsu.actions.action_base import ActionBase
+from statsu.data.data_model import ChangeValuesCommand
 
 logger = logging.getLogger(__name__)
 
 class ActionEdit(ActionBase):
+    def undo(self):
+        self.main_window.command_manager.undo_command()
+        self.main_window.refresh_data_layout()
+
+    def redo(self):
+        self.main_window.command_manager.redo_command()
+        self.main_window.refresh_data_layout()
+
     def cut_data(self):
         selections = self.main_window.get_current_data_container().data_view.selectedIndexes()
         result_text = ''
@@ -20,7 +30,7 @@ class ActionEdit(ActionBase):
         container = self.main_window.get_current_data_container()
         for selection in selections:
             container.raw_data.iloc[selection.row(), selection.column()] = ''
-        
+
         container.data_view.model().layoutChanged.emit()
 
     def copy_data(self, *args, selections = None):
@@ -52,15 +62,11 @@ class ActionEdit(ActionBase):
         selections = container.data_view.selectedIndexes()
         if len(selections) <= 0:
             return
-        
+
         min_y = math.inf
-        max_y = -1
         min_x = math.inf
-        max_x = -1
         for selection in selections:
-            max_y = max(max_y, selection.row())
             min_y = min(min_y, selection.row())
-            max_x = max(max_x, selection.column())
             min_x = min(min_x, selection.column())
 
         data_text = QApplication.clipboard().text()
@@ -73,5 +79,13 @@ class ActionEdit(ActionBase):
                 if data[idx][n] == '':
                     data[idx][n] = row.iloc[n]
 
-        container.raw_data.iloc[min_y:min_y + len(data), min_x:min_x + len(data[0])] = data
-        container.data_view.model().layoutChanged.emit()
+        # container.raw_data.iloc[min_y:min_y + len(data), min_x:min_x + len(data[0])] = data
+        command = ChangeValuesCommand(
+            container.raw_data,
+            min_y, min_y + len(data),
+            min_x, min_x + len(data[0]),
+            data,
+            desc='Paste values'
+        )
+        self.main_window.command_manager.execute_command(command)
+        self.main_window.refresh_data_layout()

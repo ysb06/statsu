@@ -1,9 +1,12 @@
 import logging
-from typing import Optional, Union
+from typing import Any, Optional, Union
 
+import numpy as np
 import pandas as pd
 from PySide6.QtCore import (QAbstractTableModel, QModelIndex, QObject,
                             QPersistentModelIndex, Qt)
+
+from statsu.ui.user_command import UserCommand, UserCommandManager
 
 logger = logging.getLogger(__name__)
 
@@ -12,7 +15,7 @@ class PandasModel(QAbstractTableModel):
     def __init__(self, data: pd.DataFrame, parent: Optional[QObject] = None) -> None:
         super().__init__(parent)
         self.raw_data = data
-        self.is_changed = False
+        self.command_manager: UserCommandManager = None
 
     def rowCount(self, parent: Union[QModelIndex, QPersistentModelIndex] = None) -> int:
         return self.raw_data.shape[0]
@@ -34,7 +37,6 @@ class PandasModel(QAbstractTableModel):
         if orientation == Qt.Orientation.Horizontal and role in (Qt.DisplayRole, Qt.EditRole):
             try:
                 self.raw_data.rename({self.raw_data.columns[section]:data}, inplace=True)
-                self.is_changed = True
                 return True
             except Exception as e:
                 logger.warn(f'Change Header Failed -> {e}')
@@ -42,7 +44,6 @@ class PandasModel(QAbstractTableModel):
         elif orientation == Qt.Orientation.Vertical and role in (Qt.DisplayRole, Qt.EditRole):
             try:
                 self.raw_data.rename({self.raw_data.index[section]:data}, inplace=True)
-                self.is_changed = True
                 return True
             except Exception as e:
                 logger.warn(f'Change Header Failed -> {e}')
@@ -69,8 +70,34 @@ class PandasModel(QAbstractTableModel):
         표에서 데이터 변경 시 DataFrame에도 반영한다.
         """
         if role == Qt.EditRole:
-            self.raw_data.iat[index.row(), index.column()] = value
-            self.is_changed = True
+            self.command_manager.execute_command(ChangeValuesCommand(
+                self.raw_data,
+                index.row(), index.row() + 1,
+                index.column(), index.column() + 1,
+                value
+            ))
             return True
         else:
             return False
+
+
+class ChangeValuesCommand(UserCommand):
+    def __init__(
+            self, 
+            raw: pd.DataFrame, 
+            top, bottom,
+            left, right,
+            data: Any,
+            desc: str = 'Value Changed'
+        ) -> None:
+        super().__init__(desc)
+        self.raw = raw
+        self.t_r = (top, bottom, left, right)
+        self.new_data = data
+        self.original_data = self.raw.iloc[self.t_r[0]:self.t_r[1], self.t_r[2]:self.t_r[3]].copy()
+    
+    def execute(self) -> None:
+        self.raw.iloc[self.t_r[0]:self.t_r[1], self.t_r[2]:self.t_r[3]] = self.new_data
+    
+    def undo(self) -> None:
+        self.raw.iloc[self.t_r[0]:self.t_r[1], self.t_r[2]:self.t_r[3]] = self.original_data
