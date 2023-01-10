@@ -14,7 +14,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self) -> None:
         super().__init__()
         self.setupUi(self)
-        self.command_manager: UserCommandManager = None
+        self.command_manager: UserCommandManager = UserCommandManager()
 
     def add_sheet(self, sheet: DataContainer):
         sheet.set_command_manager(self.command_manager)
@@ -23,6 +23,3 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def get_current_data_container(self) -> DataContainer:
         return self.main_data_tab_widget.currentWidget()
-    
-    def refresh_data_layout(self) -> None:
-        self.get_current_data_container().data_view.model().layoutChanged.emit()

@@ -10,7 +10,6 @@ logger = logging.getLogger(__name__)
 
 def load_dataframe_from_file(file_path: str) -> pd.DataFrame:
     file_type = file_path.split('.')[-1]
-    # logger.info(f'{file_path} | {file_type}')
 
     try:
         if file_type == 'xlsx' or file_type == 'xls':

@@ -1,18 +1,16 @@
 import logging
 import sys
+from dataclasses import dataclass
 from typing import List
 
 import pandas as pd
-from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QKeySequence
+from PySide6.QtWidgets import QApplication
 
-from statsu.actions.action_file import ActionFile
 from statsu.actions.action_edit import ActionEdit
+from statsu.actions.action_file import ActionFile
 from statsu.ui.data_container import DataContainer
 from statsu.ui.main_window import MainWindow
-
-from dataclasses import dataclass
-
 from statsu.ui.user_command import UserCommandManager
 
 logging.basicConfig(
@@ -41,7 +39,6 @@ class WindowSettings:
 class WindowUnit:
     def __init__(self, in_memory_data: List[DataObject] = None) -> None:
         self.main_window = MainWindow()
-        self.main_window.command_manager = UserCommandManager()
         self.settings = WindowSettings(in_memory_data)
 
         if self.settings.in_memory_target is not None:
