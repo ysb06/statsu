@@ -7,18 +7,9 @@ Simple GUI Tool for Pandas DataFrame
 
 ## Installation
 
-설치는 본 소스로부터 직접 설치하면 됩니다. 소스 다운로드나 git clone을 사용해서 컴퓨터에 저장 후 설치해도 되고 간편하게는 다음과 같이 pip를 이용해서 Github으로부터 설치할 수 있습니다.
 ```
-git clone https://github.com/ysb06/statsu.git
-cd {your project path}
-pip install {statsu source path}
+pip install statsu
 ```
-
-```
-pip install git+https://github.com/ysb06/statsu.git
-```
-
-추후 PyPI에 등록하여 설치가 가능하도록 할 계획입니다.
 
 ## Usage
 
