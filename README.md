@@ -3,7 +3,7 @@
 ## About
 Simple GUI Tool for Pandas DataFrame
 
-본 프로젝트는 Pandas의 DataFrame을 PySide6 기반으로 데이터 표시 및 편집까지 가능한 GUI 툴입니다. 코드 실행 중 콘솔 창 대신 GUI를 통해 시각적으로 확인하고 싶거나 사용자가 직접 편집하고 싶은 경우 활용 가능합니다.
+This project is a GUI tool based on PySide6 that can display and edit Pandas DataFrames. It can be used when you want to visually check the data through a GUI instead of a console window during code execution or when you want users to edit the data directly.
 
 ## Installation
 
@@ -13,14 +13,14 @@ pip install statsu
 
 ## Usage
 
-콘솔 창에 다음과 같이 입력하여 간단한 테스트를 할 수 있습니다.
+You can perform a simple test by entering the following in the console window:
 
 ```
 python debug_run.py
 ```
-실행 후 엑셀 파일이나 CSV파일로부터 데이터를 불러 올 수도 있습니다.
+After running, you can also load data from Excel files or CSV files.
 
-보거나 편집하고자 하는 DataFrame을 입력으로 넣어서도 볼 수 있습니다. 편집 후에는 저장 후 닫으면 편집된 결과도 받을 수 있습니다.
+You can view the DataFrame you want to view or edit by entering it as input. After editing, you can get the edited result by saving and closing.
 
 ```Python
 import pandas as pd
@@ -38,22 +38,22 @@ result = show(df)
 
 ### Issues, feedback and pull requests are welcome
 
-추가적으로 다른 아이디어나 의견 그리고 Pull Request는 언제든 주시면 가능한한 빨리 반영할 수 있도록 하겠습니다.
+Feel free to provide additional ideas, opinions, and pull requests.
 
-### 프로젝트 지향점
+### Project Goal
 
-본 프로젝트의 시작은 개인 프로젝트였으며 현재는 DataFrame 조작을 위한 가장 기본적인 기능만 구현하고 있습니다. 가장 중요한 목적은 DataFrame Viewer지만 여기에 저의 필요에 따라 그래프나 통계 분석과 같은 기능들을 추가할 계획입니다.
+This project started as a personal project and currently implements only the most basic functions for manipulating DataFrames. The most important goal is to be a DataFrame Viewer, but I plan to add features such as graphs and statistical analysis based on my needs.
 
-본 프로젝트는 가능한 작고 쉽게 분할 가능한 코드를 통해 여러 프로젝트에 쉽게 활용되는 것을 지향합니다.
+This project aims to be easily utilized in multiple projects through small and easily separable code.
 
-### 다른 유사 프로젝트와 비교
+### Comparison with Other Similar Projects
 
-사실 DataFrame Visualization Tool로서는 이것보다 더 많은 대안들이 많습니다.
+In fact, there are many more alternatives as DataFrame Visualization Tools than this.
 
-참고: [Pandas DataFrame Visualization Tools](https://pbpython.com/dataframe-gui-overview.html)
+[Pandas DataFrame Visualization Tools](https://pbpython.com/dataframe-gui-overview.html)
 
-현 시점에서 본 프로젝트의 장점은 코드가 작기 때문에 빠르게 이해할 수 있고 커스터마이징이 쉽다는 점입니다. 좀 더 많은 기능들을 원하면 위 링크의 프로젝트들을 참고하시고 본 프로젝트는 본인만의 도구를 만들기 위한 베이스로 사용할 때 활용해 주세요.
+The advantage of this project at the moment is that the code is small, making it easy to understand quickly and customize. If you want more features, refer to the projects in the link above, and use this project as a base to create your own tools.
 
 ### Etc.
 
-Code motivated by [PandasGUI](https://github.com/adamerose/PandasGUI). The code in the past commit includes PandasGUI code.
+Code motivated by [PandasGUI](https://github.com/adamerose/PandasGUI). Past commits of this project includes PandasGUI code.

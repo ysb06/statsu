@@ -8,7 +8,7 @@ with open("LICENSE", "r") as fh:
 
 setup(
     name='statsu',
-    version='0.0.12',
+    version='0.0.14',
     author='sbyim',
     author_email='ysb06@hotmail.com',
     description='Pandas Dataframe Editor',
