@@ -11,7 +11,6 @@ from statsu.actions.action_edit import ActionEdit
 from statsu.actions.action_file import ActionFile
 from statsu.ui.data_container import DataContainer
 from statsu.ui.main_window import MainWindow
-from statsu.ui.user_command import UserCommandManager
 
 logging.basicConfig(
     format='%(asctime)s %(name)s [%(levelname)s] %(message)s',
@@ -20,7 +19,6 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
-app = QApplication(sys.argv)
 
 @dataclass
 class DataObject:
@@ -80,8 +78,21 @@ class WindowUnit:
     def update(self) -> None:
         self.main_window.update()
 
+def load(input_data: pd.DataFrame = None, name: str = None) -> WindowUnit:
+    if input_data is not None:
+        window = WindowUnit(
+            in_memory_data=[DataObject(input_data, name=name if name is not None else 'Data')]
+        )
+    else:
+        window = WindowUnit()
+
+    return window
 
 def show(input_data: pd.DataFrame = None, name: str = None) -> pd.DataFrame:
+    app = QApplication.instance()
+    if app is None: 
+        app = QApplication(sys.argv)
+
     if input_data is not None:
         window = WindowUnit(
             in_memory_data=[DataObject(input_data, name=name if name is not None else 'Data')]
@@ -93,11 +104,18 @@ def show(input_data: pd.DataFrame = None, name: str = None) -> pd.DataFrame:
     app.exec()
 
 def show_list(input_data: List[pd.DataFrame]):
+    app = QApplication.instance()
+    if app is None: 
+        app = QApplication(sys.argv)
+
     window = WindowUnit([DataObject(data) for data in input_data])
     window.show()
     app.exec()
 
 def show_list_with_name(input_data: List[DataObject]):
+    app = QApplication.instance()
+    app.exec()
+
     window = WindowUnit(input_data)
     window.show()
     app.exec()

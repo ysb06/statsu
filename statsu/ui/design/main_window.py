@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.5.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -16,9 +16,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QMainWindow, QMenu,
-    QMenuBar, QSizePolicy, QStatusBar, QTabWidget,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QMainWindow, QMenu,
+    QMenuBar, QPushButton, QSizePolicy, QStatusBar,
+    QTabWidget, QToolBar, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -55,14 +55,33 @@ class Ui_MainWindow(object):
         self.action_edit_redo.setObjectName(u"action_edit_redo")
         self.central_widget = QWidget(MainWindow)
         self.central_widget.setObjectName(u"central_widget")
-        self.gridLayout_2 = QGridLayout(self.central_widget)
-        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.verticalLayout = QVBoxLayout(self.central_widget)
+        self.verticalLayout.setObjectName(u"verticalLayout")
         self.main_data_tab_widget = QTabWidget(self.central_widget)
         self.main_data_tab_widget.setObjectName(u"main_data_tab_widget")
         self.main_data_tab_widget.setTabPosition(QTabWidget.South)
         self.main_data_tab_widget.setTabShape(QTabWidget.Rounded)
 
-        self.gridLayout_2.addWidget(self.main_data_tab_widget, 0, 0, 1, 1)
+        self.verticalLayout.addWidget(self.main_data_tab_widget)
+
+        self.container_controller = QWidget(self.central_widget)
+        self.container_controller.setObjectName(u"container_controller")
+        self.horizontalLayout = QHBoxLayout(self.container_controller)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.prev_page_button = QPushButton(self.container_controller)
+        self.prev_page_button.setObjectName(u"prev_page_button")
+        self.prev_page_button.setCheckable(False)
+
+        self.horizontalLayout.addWidget(self.prev_page_button)
+
+        self.next_page_button = QPushButton(self.container_controller)
+        self.next_page_button.setObjectName(u"next_page_button")
+
+        self.horizontalLayout.addWidget(self.next_page_button)
+
+
+        self.verticalLayout.addWidget(self.container_controller)
 
         MainWindow.setCentralWidget(self.central_widget)
         self.main_menubar = QMenuBar(MainWindow)
@@ -76,6 +95,9 @@ class Ui_MainWindow(object):
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.toolBar = QToolBar(MainWindow)
+        self.toolBar.setObjectName(u"toolBar")
+        MainWindow.addToolBar(Qt.TopToolBarArea, self.toolBar)
 
         self.main_menubar.addAction(self.menuFile_F.menuAction())
         self.main_menubar.addAction(self.menuEdit_E.menuAction())
@@ -140,7 +162,10 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(shortcut)
         self.action_edit_undo.setText(QCoreApplication.translate("MainWindow", u"Undo", None))
         self.action_edit_redo.setText(QCoreApplication.translate("MainWindow", u"Redo", None))
+        self.prev_page_button.setText(QCoreApplication.translate("MainWindow", u"< Prev Page", None))
+        self.next_page_button.setText(QCoreApplication.translate("MainWindow", u"Next Page >", None))
         self.menuFile_F.setTitle(QCoreApplication.translate("MainWindow", u"File (&F)", None))
         self.menuEdit_E.setTitle(QCoreApplication.translate("MainWindow", u"Edit", None))
+        self.toolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"toolBar", None))
     # retranslateUi
 

@@ -22,9 +22,8 @@ class DataContainer(QWidget, Ui_DataContainer):
             data: pd.DataFrame = None,
             name: str = 'Sheet',
             data_path: Optional[str] = None,
-            parent: Optional[QWidget] = None
         ) -> None:
-        super().__init__(parent)
+        super().__init__()
         self.setupUi(self)
 
         self.command_manager: UserCommandManager = None
